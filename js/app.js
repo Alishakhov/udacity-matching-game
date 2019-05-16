@@ -21,6 +21,7 @@ function shuffle(array) {
 function initGame() {
     deck.addEventListener("click", function(e) {
         e.target.classList.add("open", "show");
+        restartTheGame(e);
         displayCards.push(e.target);
         if(displayCards.length === 2) {
             if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
@@ -41,4 +42,14 @@ function initGame() {
 }
 
 initGame();
+
+// Click on the restart button to reset the game, 
+// include moves counter, rating starts, timer
+function restartTheGame (e) {
+    let restart = document.querySelector(".restart");
+        restart.addEventListener("click", function() {
+            e.target.classList.remove("open", "show", "match");
+        });
+     //   return e; or not still work
+}
 console.log(card);
