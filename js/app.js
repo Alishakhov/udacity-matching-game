@@ -6,7 +6,6 @@ let deck = document.querySelector(".deck"),
     displayCards = [];
    
 //let shuffleIcons = Array.from(cardIcons);
-
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
@@ -16,7 +15,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -25,13 +23,17 @@ function initGame() {
         e.target.classList.add("open", "show");
         displayCards.push(e.target);
         if(displayCards.length === 2) {
-            if(displayCards[0].firstElementChild.className === displayCards[1].firstElementChild.className) {
-                displayCards[0].classList.add("open", "show", "match");
-                displayCards[1].classList.add("open", "show", "match");
+            if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
+                displayCards[0].classList.add("match");
+                displayCards[1].classList.add("match");
                 displayCards = [];
             }else{
-                console.log("not match");
-                displayCards = [];
+                setTimeout(function() {
+                    displayCards[0].classList.remove("open", "show");
+                    displayCards[1].classList.remove("open", "show");
+                    displayCards = [];
+                    console.log(displayCards);
+                  }, 200);
             }
         }
         
@@ -40,4 +42,3 @@ function initGame() {
 
 initGame();
 console.log(card);
-
