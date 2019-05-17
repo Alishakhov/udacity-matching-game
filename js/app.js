@@ -1,8 +1,10 @@
 let deck = document.querySelector(".deck"),
     card = document.querySelectorAll(".deck .card"),
     cardIcons = document.querySelectorAll(".deck .card i"),
-    restart = document.querySelector(".restart"),
-    restartIcon = document.querySelector(".restart i"),
+    //restart = document.querySelector(".restart"),
+   // restartIcon = document.querySelector(".restart i"),
+    classMoves = document.querySelector(".moves"),
+    count = 0,
     displayCards = [];
    
 //let shuffleIcons = Array.from(cardIcons);
@@ -24,6 +26,7 @@ function initGame() {
         restartTheGame(e);
         displayCards.push(e.target);
         if(displayCards.length === 2) {
+            handleMoveCounter();
             if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
                 displayCards[0].classList.add("match");
                 displayCards[1].classList.add("match");
@@ -50,6 +53,11 @@ function restartTheGame (e) {
         restart.addEventListener("click", function() {
             e.target.classList.remove("open", "show", "match");
         });
-     //   return e; or not still work
+}
+
+// Incrementing the moves 
+function handleMoveCounter() {
+    count++;
+    classMoves.innerHTML = count;
 }
 console.log(card);
