@@ -52,6 +52,7 @@ function restartTheGame (e) {
     let restart = document.querySelector(".restart");
         restart.addEventListener("click", function() {
             e.target.classList.remove("open", "show", "match");
+            classMoves.innerHTML = 0; 
         });
 }
 
