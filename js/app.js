@@ -1,8 +1,6 @@
 let deck = document.querySelector(".deck"),
     card = document.querySelectorAll(".deck .card"),
     cardIcons = document.querySelectorAll(".deck .card i"),
-    //restart = document.querySelector(".restart"),
-   // restartIcon = document.querySelector(".restart i"),
     classMoves = document.querySelector(".moves"),
     count = 0,
     displayCards = [];
