@@ -53,8 +53,8 @@ function restartTheGame (e) {
         restart.addEventListener("click", function() {
             e.target.classList.remove("open", "show", "match");
             displayCards = [];
-           classMoves.innerHTML =  0;
-           count = 0;
+            classMoves.innerHTML =  0;
+            count = 0;
         });
 }
 
