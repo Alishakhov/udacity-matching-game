@@ -3,7 +3,9 @@ let deck = document.querySelector(".deck"),
     cardIcons = document.querySelectorAll(".deck .card i"),
     classMoves = document.querySelector(".moves"),
     count = 0,
-    displayCards = [];
+    displayCards = [],
+    listOfStarsContainer = document.querySelector(".stars");
+    listOfStars = document.querySelectorAll(".stars li");
    
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
@@ -53,6 +55,24 @@ function restartTheGame (e) {
             displayCards = [];
             classMoves.innerHTML =  0;
             count = 0;
+            if(listOfStars[3].style.display = "none") {
+                listOfStars[3].style.display = "inline";
+                listOfStars[2].style.display = "inline";
+                listOfStars[1].style.display = "inline";
+                listOfStars[0].style.display = "inline";
+            }else if(listOfStars[2].style.display ="none"){
+                listOfStars[2].style.display = "inline";
+                listOfStars[1].style.display = "inline";
+                listOfStars[0].style.display = "inline";
+            }else if(listOfStars[1].style.display = "none") {
+                listOfStars[1].style.display = "inline";
+            }else if(listOfStars[0].style.display = "none") {
+                listOfStars[0].style.display = "inline";
+            }else {
+                // both below are correct
+                return listOfStarsContainer;
+               // listOfStarsContainer.style.display = "inline";
+            }
         });
 }
 
@@ -60,5 +80,27 @@ function restartTheGame (e) {
 function handleMoveCounter() {
     count++;
     classMoves.innerHTML = count;
+    handleUpdateRatingStars();
 }
-console.log(card);
+
+// Rating starts
+function handleUpdateRatingStars() {
+    if(count > 10 && count < 14) {
+        listOfStars[0].style.display = "none";
+    }else if(count > 13 && count < 16) {
+        listOfStars[0].style.display = "none";
+        listOfStars[1].style.display = "none";
+    }else if(count > 15 && count < 19) {
+        listOfStars[0].style.display = "none";
+        listOfStars[1].style.display = "none";
+        listOfStars[2].style.display = "none";
+    }else if(count > 18) {
+        listOfStars[0].style.display = "none";
+        listOfStars[1].style.display = "none";
+        listOfStars[2].style.display = "none";  
+        listOfStars[3].style.display = "none";  
+    }else {
+        return listOfStarsContainer;
+    }
+}
+
