@@ -4,9 +4,10 @@ let deck = document.querySelector(".deck"),
     classMoves = document.querySelector(".moves"),
     count = 0,
     displayCards = [],
-    listOfStarsContainer = document.querySelector(".stars");
-    listOfStars = document.querySelectorAll(".stars li");
-   
+    listOfStarsContainer = document.querySelector(".stars"),
+    listOfStars = document.querySelectorAll(".stars li"),
+    winningCards = [];
+
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -30,6 +31,10 @@ function initGame() {
             if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
                 displayCards[0].classList.add("match");
                 displayCards[1].classList.add("match");
+                winningCards.push(e.target);
+                winningCards.push(e.target);
+                handleWinningCards();
+                console.log(winningCards);
                 displayCards = [];
             }else{
                 setTimeout(function() {
@@ -104,3 +109,10 @@ function handleUpdateRatingStars() {
     }
 }
 
+// If for match card to win
+function handleWinningCards() {
+    if(winningCards.length === 16) {
+       let modal = document.getElementById("dialog-modal-container");
+            modal.style.display = "block";
+    }
+}
