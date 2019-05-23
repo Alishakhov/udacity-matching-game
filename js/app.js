@@ -35,8 +35,7 @@ function initGame() {
         if(displayCards.length === 2) {
             handleMoveCounter();
             if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
-                displayCards[0].classList.add("match");
-                displayCards[1].classList.add("match");
+                matchedCards();
                 winningCards.push(e.target);
                 winningCards.push(e.target);
                 handleWinningCards();
@@ -51,6 +50,13 @@ function initGame() {
 }
 
 initGame();
+
+// match card 
+
+function matchedCards() {
+    displayCards[0].classList.add("match");
+    displayCards[1].classList.add("match");
+}
 
 // NOt matched 
 function notMatchedCards() {
