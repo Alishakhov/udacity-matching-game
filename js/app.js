@@ -43,12 +43,7 @@ function initGame() {
                 console.log(winningCards);
                 displayCards = [];
             }else{
-                setTimeout(function() {
-                    displayCards[0].classList.remove("open", "show");
-                    displayCards[1].classList.remove("open", "show");
-                    displayCards = [];
-                    console.log(displayCards);
-                  }, 200);
+                setTimeout(notMatchedCards, 500);
             }
         }
         
@@ -57,8 +52,16 @@ function initGame() {
 
 initGame();
 
+// NOt matched 
+function notMatchedCards() {
+    displayCards[0].classList.remove("open", "show");
+    displayCards[1].classList.remove("open", "show");
+    displayCards = [];
+    console.log(displayCards);
+  }
+
 // Click on the restart button to reset the game, 
-// include moves counter, rating starts, timer
+
 function restartTheGame (e) {
     let restart = document.querySelector(".restart");
         restart.addEventListener("click", function() {
