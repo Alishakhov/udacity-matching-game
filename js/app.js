@@ -6,6 +6,8 @@ let deck = document.querySelector(".deck"),
     displayCards = [],
     listOfStarsContainer = document.querySelector(".stars"),
     listOfStars = document.querySelectorAll(".stars li"),
+    modal = document.getElementById("dialog-modal-container"),
+    btn = document.getElementById("btn"),
     winningCards = [];
 
 //let shuffleIcons = Array.from(cardIcons);
@@ -22,6 +24,10 @@ function shuffle(array) {
 }
 
 function initGame() {
+    card.forEach(function(element) {
+        element.classList.remove("open", "show", "match");
+        console.log(element.classList);
+    });
     deck.addEventListener("click", function(e) {
         e.target.classList.add("open", "show");
         restartTheGame(e);
@@ -56,6 +62,7 @@ initGame();
 function restartTheGame (e) {
     let restart = document.querySelector(".restart");
         restart.addEventListener("click", function() {
+           // closeModal();
             e.target.classList.remove("open", "show", "match");
             displayCards = [];
             classMoves.innerHTML =  0;
@@ -112,7 +119,24 @@ function handleUpdateRatingStars() {
 // If for match card to win
 function handleWinningCards() {
     if(winningCards.length === 16) {
-       let modal = document.getElementById("dialog-modal-container");
-            modal.style.display = "block";
+         modal.style.display = "block";
+         handlePlayAgainBtn();
     }
 }
+
+
+// Close modal
+function closeModal() {
+    modal.style.display = "none";
+}
+
+// handle play agian button
+function handlePlayAgainBtn() {
+    btn.addEventListener("click",function() {
+        closeModal();
+        initGame();
+        winningCards = [];
+    });
+}
+
+console.log(card);
