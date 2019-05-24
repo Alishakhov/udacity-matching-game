@@ -101,8 +101,15 @@ function handleWinningCards() {
 // display modal
 function openModal() {
     modal.style.display = "block";
+    getStarMoveTimerValue();
 }
 
+// display the stars, moves, timer on the modal
+function getStarMoveTimerValue() {
+    let moveModal = document.getElementById("move-modal");
+    moveModal.innerHTML =  `Moves: ${count} `;
+   
+}
 /*--Handle reset after click on the restart button-- */
 
 // Handle reset the moves count
