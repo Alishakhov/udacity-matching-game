@@ -24,10 +24,6 @@ function shuffle(array) {
 }
 
 function initGame() {
-    card.forEach(function(element) {
-        element.classList.remove("open", "show", "match");
-        console.log(element.classList);
-    });
     deck.addEventListener("click", function(e) {
         e.target.classList.add("open", "show");
         restartTheGame(e);
@@ -42,7 +38,7 @@ function initGame() {
                 console.log(winningCards);
                 displayCards = [];
             }else{
-                setTimeout(notMatchedCards, 500);
+                setTimeout(notMatchedCards, 100);
             }
         }
         
@@ -51,8 +47,9 @@ function initGame() {
 
 initGame();
 
-// match card 
+// remove all open show match to start a new game
 
+// match card 
 function matchedCards() {
     displayCards[0].classList.add("match");
     displayCards[1].classList.add("match");
@@ -64,37 +61,6 @@ function notMatchedCards() {
     displayCards[1].classList.remove("open", "show");
     displayCards = [];
     console.log(displayCards);
-  }
-
-// Click on the restart button to reset the game, 
-
-function restartTheGame (e) {
-    let restart = document.querySelector(".restart");
-        restart.addEventListener("click", function() {
-           // closeModal();
-            e.target.classList.remove("open", "show", "match");
-            displayCards = [];
-            classMoves.innerHTML =  0;
-            count = 0;
-            if(listOfStars[3].style.display = "none") {
-                listOfStars[3].style.display = "inline";
-                listOfStars[2].style.display = "inline";
-                listOfStars[1].style.display = "inline";
-                listOfStars[0].style.display = "inline";
-            }else if(listOfStars[2].style.display ="none"){
-                listOfStars[2].style.display = "inline";
-                listOfStars[1].style.display = "inline";
-                listOfStars[0].style.display = "inline";
-            }else if(listOfStars[1].style.display = "none") {
-                listOfStars[1].style.display = "inline";
-            }else if(listOfStars[0].style.display = "none") {
-                listOfStars[0].style.display = "inline";
-            }else {
-                // both below are correct
-                return listOfStarsContainer;
-               // listOfStarsContainer.style.display = "inline";
-            }
-        });
 }
 
 // Incrementing the moves 
@@ -128,23 +94,81 @@ function handleUpdateRatingStars() {
 // If for match card to win
 function handleWinningCards() {
     if(winningCards.length === 16) {
-         modal.style.display = "block";
-         handlePlayAgainBtn();
+        openModal();
+    }
+}  
+
+// display modal
+function openModal() {
+    modal.style.display = "block";
+}
+
+/*--Handle reset after click on the restart button-- */
+
+// Handle reset the moves count
+function ResetMoveCounter() {
+    classMoves.innerHTML =  0;
+    count = 0;
+    handleResetRatingStars();
+}
+
+// handle reset the rating stars
+function handleResetRatingStars() {
+    if(listOfStars[3].style.display = "none") {
+        listOfStars[3].style.display = "inline";
+        listOfStars[2].style.display = "inline";
+        listOfStars[1].style.display = "inline";
+        listOfStars[0].style.display = "inline";
+    }else if(listOfStars[2].style.display ="none"){
+        listOfStars[2].style.display = "inline";
+        listOfStars[1].style.display = "inline";
+        listOfStars[0].style.display = "inline";
+    }else if(listOfStars[1].style.display = "none") {
+        listOfStars[1].style.display = "inline";
+    }else if(listOfStars[0].style.display = "none") {
+        listOfStars[0].style.display = "inline";
+    }else {
+        // both below are correct
+        return listOfStarsContainer;
+       // listOfStarsContainer.style.display = "inline";
     }
 }
 
+// Click on the restart button to reset the game, 
+
+function restartTheGame (e) {
+    let restart = document.querySelector(".restart");
+        restart.addEventListener("click", function() {
+            e.target.classList.remove("open", "show", "match");
+            displayCards = [];
+            ResetMoveCounter();
+            winningCards = [];
+            handleWinningCards();
+        });
+}
+
+/*--Handle start a replay game--*/
+// handle play agian button
+function handlePlayAgainBtn() {
+    closeModal();
+    removeOpenShowMatch();
+    restartTheGame(card);
+    ResetMoveCounter();
+    winningCards = [];
+    handleWinningCards();
+}
 
 // Close modal
 function closeModal() {
     modal.style.display = "none";
 }
 
-// handle play agian button
-function handlePlayAgainBtn() {
-    btn.addEventListener("click",function() {
-        closeModal();
-        initGame();
-        winningCards = [];
+
+// 
+function removeOpenShowMatch() {
+    card.forEach(function(element) {
+        element.classList.remove("open", "show", "match");
+        console.log(element.classList);
     });
 }
 
