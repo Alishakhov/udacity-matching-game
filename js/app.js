@@ -8,7 +8,8 @@ let deck = document.querySelector(".deck"),
     listOfStars = document.querySelectorAll(".stars li"),
     modal = document.getElementById("dialog-modal-container"),
     btn = document.getElementById("btn"),
-    winningCards = [];
+    winningCards = [],
+    starModalNum = 5;
 
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
@@ -74,20 +75,25 @@ function handleMoveCounter() {
 function handleUpdateRatingStars() {
     if(count > 10 && count < 14) {
         listOfStars[0].style.display = "none";
+        starModalNum = 4;
     }else if(count > 13 && count < 16) {
         listOfStars[0].style.display = "none";
         listOfStars[1].style.display = "none";
+        starModalNum = 3;
     }else if(count > 15 && count < 19) {
         listOfStars[0].style.display = "none";
         listOfStars[1].style.display = "none";
         listOfStars[2].style.display = "none";
+        starModalNum = 2;
     }else if(count > 18) {
         listOfStars[0].style.display = "none";
         listOfStars[1].style.display = "none";
         listOfStars[2].style.display = "none";  
-        listOfStars[3].style.display = "none";  
+        listOfStars[3].style.display = "none"; 
+        starModalNum = 1; 
     }else {
         return listOfStarsContainer;
+        starModalNum = 5;
     }
 }
 
@@ -106,10 +112,12 @@ function openModal() {
 
 // display the stars, moves, timer on the modal
 function getStarMoveTimerValue() {
-    let moveModal = document.getElementById("move-modal");
-    moveModal.innerHTML =  `Moves: ${count} `;
-   
+    let moveModal = document.getElementById("move-modal"),
+    starModal = document.getElementById("star-modal");
+        moveModal.innerHTML =  `Moves: ${count}`;
+        starModal.innerHTML = `Stars: ${starModalNum}`;
 }
+
 /*--Handle reset after click on the restart button-- */
 
 // Handle reset the moves count
@@ -126,14 +134,19 @@ function handleResetRatingStars() {
         listOfStars[2].style.display = "inline";
         listOfStars[1].style.display = "inline";
         listOfStars[0].style.display = "inline";
+        starModalNum = 4;
     }else if(listOfStars[2].style.display ="none"){
         listOfStars[2].style.display = "inline";
         listOfStars[1].style.display = "inline";
         listOfStars[0].style.display = "inline";
+        starModalNum = 3;
     }else if(listOfStars[1].style.display = "none") {
         listOfStars[1].style.display = "inline";
+        listOfStars[0].style.display = "inline";
+        starModalNum = 2;
     }else if(listOfStars[0].style.display = "none") {
         listOfStars[0].style.display = "inline";
+        starModalNum = 1;
     }else {
         // both below are correct
         return listOfStarsContainer;
