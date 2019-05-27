@@ -54,9 +54,10 @@ h1 {
 }
 
 .deck .card {
-    height: 125px;
+   height: 125px;
     width: 125px;
-    background: linear-gradient(160deg,#eeebea 30%, #cfdd0d 70%);
+  /*  background: linear-gradient(160deg,#eeebea 30%, #cfdd0d 70%);*/
+    background-image: url('../img/card-bkg.jpg');
     font-size: 0;
     color:red;
     border-radius: 8px;
@@ -79,7 +80,7 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: yellowgreen;
+    background: #000;
     font-size: 33px;
 }
 
