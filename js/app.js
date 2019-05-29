@@ -18,7 +18,9 @@ let deck = document.querySelector(".deck"),
 
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+	let currentIndex = array.length, 
+		temporaryValue, 
+		randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
