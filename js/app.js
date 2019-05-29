@@ -1,6 +1,8 @@
 let deck = document.querySelector(".deck"),
     card = document.querySelectorAll(".deck .card"),
-    cardIcons = document.querySelectorAll(".deck .card i"),
+	cardIcons = document.querySelectorAll(".deck .card i"),
+	//convertCardIconsToArray = Array.from(cardIcons),
+	convertCardIconsToArray = Array.from(card),
     classMoves = document.querySelector(".moves"),
     count = 0,
     displayCards = [],
@@ -9,7 +11,10 @@ let deck = document.querySelector(".deck"),
     modal = document.getElementById("dialog-modal-container"),
     btn = document.getElementById("btn"),
     winningCards = [],
-    starModalNum = 5;
+    starModalNum = 5,
+    timerClass = 0,
+	timer = document.getElementById("timer"),
+    storeTimer;
 
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
@@ -24,8 +29,19 @@ function shuffle(array) {
     return array;
 }
 
+// testing to put the shuffle card in the card innerHTML
+function cardInnerHTML() {
+	let arrayIcons = shuffle(convertCardIconsToArray);
+	let convertArrayToNodeList = arrayIcons.forEach(function(element) {
+		deck.append(element);
+	});
+	return convertArrayToNodeList;
+}
+
 function initGame() {
+	cardInnerHTML();
     deck.addEventListener("click", function(e) {
+  		//setTimer();
         e.target.classList.add("open", "show");
         restartTheGame(e);
         displayCards.push(e.target);
@@ -36,7 +52,6 @@ function initGame() {
                 winningCards.push(e.target);
                 winningCards.push(e.target);
                 handleWinningCards();
-                console.log(winningCards);
                 displayCards = [];
             }else{
                 setTimeout(notMatchedCards, 100);
@@ -48,7 +63,14 @@ function initGame() {
 
 initGame();
 
-// remove all open show match to start a new game
+// Adding timer
+function setTimer() {
+    storeTimer = setInterval(function() {
+        timerClass++;
+        timer.innerHTML = `${timerClass}`;
+        console.log(timerClass);
+    }, 1000);
+}
 
 // match card 
 function matchedCards() {
@@ -61,7 +83,6 @@ function notMatchedCards() {
     displayCards[0].classList.remove("open", "show");
     displayCards[1].classList.remove("open", "show");
     displayCards = [];
-    console.log(displayCards);
 }
 
 // Incrementing the moves 
@@ -92,14 +113,17 @@ function handleUpdateRatingStars() {
         listOfStars[3].style.display = "none"; 
         starModalNum = 1; 
     }else {
-        return listOfStarsContainer;
         starModalNum = 5;
+        return listOfStarsContainer;
+        
     }
 }
+
 
 // If for match card to win
 function handleWinningCards() {
     if(winningCards.length === 16) {
+        clearTimeout(storeTimer);
         openModal();
     }
 }  
@@ -113,9 +137,11 @@ function openModal() {
 // display the stars, moves, timer on the modal
 function getStarMoveTimerValue() {
     let moveModal = document.getElementById("move-modal"),
-    starModal = document.getElementById("star-modal");
+        starModal = document.getElementById("star-modal"),
+        timerModal = document.getElementById("timer-modal");
         moveModal.innerHTML =  `Moves: ${count}`;
         starModal.innerHTML = `Stars: ${starModalNum}`;
+        timerModal.innerHTML = `Timer: ${timerClass}`;
 }
 
 /*--Handle reset after click on the restart button-- */
@@ -149,13 +175,23 @@ function handleResetRatingStars() {
         starModalNum = 1;
     }else {
         // both below are correct
-        return listOfStarsContainer;
+		return listOfStarsContainer;
        // listOfStarsContainer.style.display = "inline";
     }
 }
 
-// Click on the restart button to reset the game, 
 
+// Reset timer
+function handleResetTimer() {
+    timerClass = 0;
+    storeTimer = setInterval(function() {
+        timerClass++;
+        timer.innerHTML = `${timerClass} Seconds`;
+        console.log(timerClass);
+    }, 1000);
+}
+
+// Click on the restart button to reset the game, 
 function restartTheGame (e) {
     let restart = document.querySelector(".restart");
         restart.addEventListener("click", function() {
@@ -176,6 +212,7 @@ function handlePlayAgainBtn() {
     ResetMoveCounter();
     winningCards = [];
     handleWinningCards();
+  //  handleResetTimer();
 }
 
 // Close modal
@@ -192,4 +229,3 @@ function removeOpenShowMatch() {
     });
 }
 
-console.log(card);
