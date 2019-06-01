@@ -1,8 +1,7 @@
 let deck = document.querySelector(".deck"),
     card = document.querySelectorAll(".deck .card"),
 	cardIcons = document.querySelectorAll(".deck .card i"),
-	//convertCardIconsToArray = Array.from(cardIcons),
-	convertCardIconsToArray = Array.from(card),
+	convertCardToArray = Array.from(card),
     classMoves = document.querySelector(".moves"),
     count = 0,
     displayCards = [],
@@ -14,7 +13,9 @@ let deck = document.querySelector(".deck"),
     starModalNum = 5,
     timerClass = 0,
 	timer = document.getElementById("timer"),
-    storeTimer;
+	storeTimer,
+	modalH1 = document.getElementById("dialog-modal-h1"),
+	modalH2 = document.getElementById("dialog-modal-h2");
 
 //let shuffleIcons = Array.from(cardIcons);
 function shuffle(array) {
@@ -32,16 +33,17 @@ function shuffle(array) {
 }
 
 // testing to put the shuffle card in the card innerHTML
-function cardInnerHTML() {
-	let arrayIcons = shuffle(convertCardIconsToArray);
-	let convertArrayToNodeList = arrayIcons.forEach(function(element) {
+function convertArrayToNodeList() {
+	let arrayIcons = shuffle(convertCardToArray);
+	let nodeList = arrayIcons.forEach(function(element) {
 		deck.append(element);
 	});
-	return convertArrayToNodeList;
+	return nodeList;
 }
 
+// Beginning of the game
 function initGame() {
-	cardInnerHTML();
+	convertArrayToNodeList();
     deck.addEventListener("click", function(e) {
   		//setTimer();
         e.target.classList.add("open", "show");
@@ -66,10 +68,18 @@ function initGame() {
 initGame();
 
 // Adding timer
-function setTimer() {
+/*function setTimer() {
     storeTimer = setInterval(function() {
         timerClass++;
         timer.innerHTML = `${timerClass}`;
+        console.log(timerClass);
+    }, 1000);
+}*/
+function setTimer() {
+	let min = 0
+    storeTimer = setInterval(function() {
+        timerClass++;
+		timer.innerHTML = `${timerClass} seconds`;
         console.log(timerClass);
     }, 1000);
 }
@@ -80,7 +90,7 @@ function matchedCards() {
     displayCards[1].classList.add("match");
 }
 
-// NOt matched 
+// Not matched 
 function notMatchedCards() {
     displayCards[0].classList.remove("open", "show");
     displayCards[1].classList.remove("open", "show");
@@ -95,34 +105,69 @@ function handleMoveCounter() {
 }
 
 // Rating starts
-function handleUpdateRatingStars() {
+/*function handleUpdateRatingStars() {
     if(count > 10 && count < 14) {
-        listOfStars[0].style.display = "none";
+		listOfStars[0].style.display = "none";
+		fourStars();
         starModalNum = 4;
     }else if(count > 13 && count < 16) {
         listOfStars[0].style.display = "none";
-        listOfStars[1].style.display = "none";
+		listOfStars[1].style.display = "none";
+		threeStars();
         starModalNum = 3;
     }else if(count > 15 && count < 19) {
         listOfStars[0].style.display = "none";
         listOfStars[1].style.display = "none";
-        listOfStars[2].style.display = "none";
+		listOfStars[2].style.display = "none";
+		twoStars();
         starModalNum = 2;
     }else if(count > 18) {
         listOfStars[0].style.display = "none";
         listOfStars[1].style.display = "none";
         listOfStars[2].style.display = "none";  
         listOfStars[3].style.display = "none"; 
-        starModalNum = 1; 
+		starModalNum = 1; 
+		oneStars();
     }else {
-        starModalNum = 5;
+		starModalNum = 5;
+		fiveStars();
+        return listOfStarsContainer;
+        
+    }
+}*/
+
+function handleUpdateRatingStars() {
+    if(count > 10 && count < 14) {
+		listOfStars[0].style.color = "#eee";
+		fourStars();
+        starModalNum = 4;
+    }else if(count > 13 && count < 16) {
+        listOfStars[0].style.color = "#eee";
+		listOfStars[1].style.color = "#eee";
+		threeStars();
+        starModalNum = 3;
+    }else if(count > 15 && count < 19) {
+        listOfStars[0].style.color = "#eee";
+        listOfStars[1].style.color = "#eee";
+		listOfStars[2].style.color = "#eee";
+		twoStars();
+        starModalNum = 2;
+    }else if(count > 18) {
+        listOfStars[0].style.color = "#eee";
+        listOfStars[1].style.color = "#eee";
+        listOfStars[2].style.color = "#eee";
+        listOfStars[3].style.color = "#eee";
+		starModalNum = 1; 
+		oneStars();
+    }else {
+		starModalNum = 5;
+		fiveStars();
         return listOfStarsContainer;
         
     }
 }
 
-
-// If for match card to win
+// Check for winning the game 
 function handleWinningCards() {
     if(winningCards.length === 16) {
         clearTimeout(storeTimer);
@@ -139,11 +184,41 @@ function openModal() {
 // display the stars, moves, timer on the modal
 function getStarMoveTimerValue() {
     let moveModal = document.getElementById("move-modal"),
-        starModal = document.getElementById("star-modal"),
-        timerModal = document.getElementById("timer-modal");
+        starModal = document.getElementById("star-modal");
+    //    timerModal = document.getElementById("timer-modal");
         moveModal.innerHTML =  `Moves: ${count}`;
         starModal.innerHTML = `Stars: ${starModalNum}`;
-        timerModal.innerHTML = `Timer: ${timerClass}`;
+    //    timerModal.innerHTML = `Timer: ${timerClass}`;
+}
+
+// Modal display content when hit stars
+function fiveStars() {
+	modalH2.innerHTML = "&#128525;";
+	modalH1.innerHTML = "YEAH! YOU'RE OWESOME";
+}
+
+// Modal display content when hit four stars
+function fourStars() {
+	modalH2.innerHTML = "&#128516;";
+	modalH1.innerHTML = "YOU'RE GOOD!";
+}
+
+// Modal display content when hit three stars
+function threeStars() {
+	modalH2.innerHTML = "&#128527;";
+	modalH1.innerHTML = "I can do better next time";
+}
+
+// Modal display content when hit three stars
+function twoStars() {
+	modalH2.innerHTML = "&#128531;";
+	modalH1.innerHTML = "I can't give up on this!";
+}
+
+// Modal display content when hit three stars
+function oneStars() {
+	modalH2.innerHTML = "&#128557;";
+	modalH1.innerHTML = "What??? One star!!!";
 }
 
 /*--Handle reset after click on the restart button-- */
@@ -156,32 +231,67 @@ function ResetMoveCounter() {
 }
 
 // handle reset the rating stars
-function handleResetRatingStars() {
+/*function handleResetRatingStars() {
     if(listOfStars[3].style.display = "none") {
         listOfStars[3].style.display = "inline";
         listOfStars[2].style.display = "inline";
         listOfStars[1].style.display = "inline";
-        listOfStars[0].style.display = "inline";
+		listOfStars[0].style.display = "inline";
+		fourStars();
         starModalNum = 4;
     }else if(listOfStars[2].style.display ="none"){
         listOfStars[2].style.display = "inline";
         listOfStars[1].style.display = "inline";
-        listOfStars[0].style.display = "inline";
+		listOfStars[0].style.display = "inline";
+		threeStars();
         starModalNum = 3;
     }else if(listOfStars[1].style.display = "none") {
         listOfStars[1].style.display = "inline";
-        listOfStars[0].style.display = "inline";
+		listOfStars[0].style.display = "inline";
+		twoStars();
         starModalNum = 2;
     }else if(listOfStars[0].style.display = "none") {
-        listOfStars[0].style.display = "inline";
+		listOfStars[0].style.display = "inline";
+		oneStars();
         starModalNum = 1;
     }else {
-        // both below are correct
+		// both below are correct
+		fiveStars();
+		return listOfStarsContainer;
+       // listOfStarsContainer.style.display = "inline";
+    }
+}*/
+// Changed star color instead of display = none
+function handleResetRatingStars() {
+    if(listOfStars[3].style.color = "#eee") {
+        listOfStars[3].style.color = "rgb(228, 206, 15)";
+        listOfStars[2].style.color = "rgb(228, 206, 15)";
+        listOfStars[1].style.color = "rgb(228, 206, 15)";
+		listOfStars[0].style.color = "rgb(228, 206, 15)";
+		fourStars();
+        starModalNum = 4;
+    }else if(listOfStars[2].style.color = "#eee"){
+        listOfStars[2].style.color = "rgb(228, 206, 15)";
+        listOfStars[1].style.color = "rgb(228, 206, 15)";
+		listOfStars[0].style.color = "rgb(228, 206, 15)";
+		threeStars();
+        starModalNum = 3;
+    }else if(listOfStars[1].style.color = "#eee") {
+        listOfStars[1].style.color = "rgb(228, 206, 15)";
+		listOfStars[0].style.color = "rgb(228, 206, 15)";
+		twoStars();
+        starModalNum = 2;
+    }else if(listOfStars[0].style.color = "#eee") {
+		listOfStars[0].style.color = "rgb(228, 206, 15)";
+		oneStars();
+        starModalNum = 1;
+    }else {
+		// both below are correct
+		fiveStars();
 		return listOfStarsContainer;
        // listOfStarsContainer.style.display = "inline";
     }
 }
-
 
 // Reset timer
 function handleResetTimer() {
@@ -198,7 +308,8 @@ function restartTheGame (e) {
     let restart = document.querySelector(".restart");
         restart.addEventListener("click", function() {
             e.target.classList.remove("open", "show", "match");
-            displayCards = [];
+			displayCards = [];
+			convertArrayToNodeList();
             ResetMoveCounter();
             winningCards = [];
             handleWinningCards();
@@ -209,7 +320,8 @@ function restartTheGame (e) {
 // handle play agian button
 function handlePlayAgainBtn() {
     closeModal();
-    removeOpenShowMatch();
+	removeOpenShowMatch();
+	convertArrayToNodeList();
     restartTheGame(card);
     ResetMoveCounter();
     winningCards = [];
@@ -223,7 +335,7 @@ function closeModal() {
 }
 
 
-// 
+// this is for play again afte the winning
 function removeOpenShowMatch() {
     card.forEach(function(element) {
         element.classList.remove("open", "show", "match");
