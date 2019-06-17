@@ -44,11 +44,12 @@ function convertArrayToNodeList() {
 // Beginning of the game
 function initGame() {
 	convertArrayToNodeList();
-    deck.addEventListener("click", function(e) {
+    deck.addEventListener("click", e => {
   		//setTimer();
         e.target.classList.add("open", "show");
         restartTheGame(e);
         displayCards.push(e.target);
+        // go home do the disable the count below
         if(displayCards.length === 2) {
             handleMoveCounter();
             if(displayCards[0].firstElementChild.className == displayCards[1].firstElementChild.className) {
@@ -58,7 +59,7 @@ function initGame() {
                 handleWinningCards();
                 displayCards = [];
             }else{
-                setTimeout(notMatchedCards, 100);
+                setTimeout(notMatchedCards, 700);
             }
         }
         
@@ -306,7 +307,7 @@ function handleResetTimer() {
 // Click on the restart button to reset the game, 
 function restartTheGame (e) {
     let restart = document.querySelector(".restart");
-        restart.addEventListener("click", function() {
+        restart.addEventListener("click", () => {
             e.target.classList.remove("open", "show", "match");
 			displayCards = [];
 			convertArrayToNodeList();
@@ -337,7 +338,7 @@ function closeModal() {
 
 // this is for play again afte the winning
 function removeOpenShowMatch() {
-    card.forEach(function(element) {
+    card.forEach(element => {
         element.classList.remove("open", "show", "match");
         console.log(element.classList);
     });
