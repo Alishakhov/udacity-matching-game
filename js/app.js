@@ -59,7 +59,7 @@ function initGame() {
                 handleWinningCards();
                 displayCards = [];
             }else{
-                setTimeout(notMatchedCards, 700);
+                setTimeout(notMatchedCards, 1000);
             }
         }
         
@@ -201,7 +201,7 @@ function fiveStars() {
 // Modal display content when hit four stars
 function fourStars() {
 	modalH2.innerHTML = "&#128516;";
-	modalH1.innerHTML = "YOU'RE GOOD!";
+	modalH1.innerHTML = "Good Job!";
 }
 
 // Modal display content when hit three stars
